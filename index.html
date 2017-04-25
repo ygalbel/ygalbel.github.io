@@ -1,0 +1,255 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+
+<head>
+    <title>Makam Quiz</title>
+    <meta name="robots" content="noindex" />
+    <style type="text/css">
+        body {
+            background: #FFFFFF;
+            text-align: center;
+        }
+
+        p {
+            background: #FFFFFF;
+            font-family: serif;
+            text-align: right;
+            color: #0000A0;
+            font-size: 16pt;
+
+        }
+        a:link, a:hover, a:active { color: black; text-decoration: none; }
+        h1 {
+            background: #0000A0;
+            color: #FFFFFF;
+            font-weight: bold;
+            font-size: 18pt;
+            font-family: Arial;
+        }
+
+        h2 {
+            background: #FFFF00;
+            color: #000000;
+            font-weight: bold;
+            font-size: 30pt;
+            font-family: Arial, sans-serif;
+        }
+        a {
+            background-color:lightgrey;
+            width:200px;
+            height:50px;
+            padding:10px;
+
+            border-radius: 10px 10px 10px 10px;
+            -ms-border-radius: 10px 10px 10px 10px;
+            -moz-border-radius: 10px 10px 10px 10px;
+            -webkit-border-radius: 10px 10px 10px 10px;
+            -khtml-border-radius: 10px 10px 10px 10px;
+        }
+        body {
+            color: #D5D5D5;
+            font-size: 16pt;
+            font-family: Tahoma, Arial, sans-serif;
+        }
+
+        h3 {
+            background: #D5D5D5;
+            color: #000000;
+            font-weight: bold;
+            font-size: 20pt;
+            font-family: Arial, sans-serif;
+        }
+        h5 {
+            background: #FFFFFF;
+            color: #0080FF;
+            font-weight: bold;
+            font-size: 16pt;
+            font-family: Arial, sans-serif;
+            text-align: left;
+        }
+        .img-right { float:right; margin: 5px; }
+        .img-left { float:left; margin: 5px; }
+        .wrap {
+            width: 100%;
+        }
+
+        .floatleft, .floatright {
+            float:left;
+            width: 30%;
+            background-color: #FFFFFF;
+            height: 400px;
+        }
+
+        .floatright {
+            background-color: #FFFFFF;
+            width: 70%;
+        }
+
+            /*
+
+             -------------------------------------------------------------
+
+             In-page demo CSS - see external CSS for actual relevant stuff.
+
+             --------------------------------------------------------------
+
+             */
+
+        #soundmanager-debug {
+            /* SM2 debug container (optional, makes debug more useable) */
+            position:absolute;position:fixed;*position:absolute;bottom:10px;right:10px;width:50em;height:18em;overflow:auto;background:#fff;margin:1em;padding:1em;border:1px solid #999;font-family:"lucida console",verdana,tahoma,"sans serif";font-size:x-small;line-height:1.5em;opacity:0.9;filter:alpha(opacity=90);
+        }
+
+        body {
+            font:75% normal verdana,arial,tahoma,"sans serif";
+        }
+        .rounded-corners
+        {
+            background-color:lightgrey;
+            width:200px;
+            height:50px;
+            padding:10px;
+
+            border-radius: 10px 10px 10px 10px;
+            -ms-border-radius: 10px 10px 10px 10px;
+            -moz-border-radius: 10px 10px 10px 10px;
+            -webkit-border-radius: 10px 10px 10px 10px;
+            -khtml-border-radius: 10px 10px 10px 10px;
+        }
+
+    </style>
+    <link rel="stylesheet" type="text/css" href="css/mp3-player-button.css" />
+    <script type="text/javascript" src="SoundMaster/soundmanager2.js"></script>
+    <script type="text/javascript" src="SoundMaster/mp3-player-button.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        soundManager.setup({
+            // required: path to directory containing SM2 SWF files
+            url: 'swf/'
+        });
+    </script>
+
+</head>
+<body>
+<h1 title="Makam Quiz">Makam Quiz</h1>
+    <div class="wrap">
+        <div class= "floatleft">
+            <img class="img-left" src="pic/gx3651.jpg" width="289" height="600" alt="" title="" border="0" />\
+        </div>
+
+        <div class="floatright">
+            <p><b id="questionIndex">1/20</b></p>
+            <h5>
+                <br>
+                <input type="radio" name="prep" value="Ajam" checked>Ajam<br>
+                <input type="radio" name="prep" value="Bayat" >Bayat<br>
+                <input type="radio" name="prep" value="Hjaz" >Hjaz<br>
+                <input type="radio" name="prep" value="Nahwand" >Nahwand<br>
+                <input type="radio" name="prep" value="Rast" >Rast<br>
+                <input type="radio" name="prep" value="Saba" >Saba<br>
+                <input type="radio" name="prep" value="Siga" >Siga
+                <br><br><br>
+            </h5>
+
+            <button id="submit" class="rounded-corners">Submit</button>
+            <button class="rounded-corners"><a id="current" href="music/Ajam/Ajam (1).mp3"class="sm2_button">Next</a></button>
+            <br>
+            <br>
+            <h2>
+            </h2>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        var MakamList =["Ajam","Bayat","Rast","Hjaz",
+            "Nahwand","Saba","Siga"];
+
+        var maxFiles = 20;
+        var questionIndex = 1;
+        var maxQuestion = 20;
+        var mark = 0;
+        var currentMakam;
+        var currentId;
+        function calculateFileName(makamString, num) {
+            return "music/" + makamString + "/"
+                    + makamString +" (" + num + ").mp3";
+        }
+
+        function getCheckedValue(radioObj) {
+            if(!radioObj)
+                return "";
+            var radioLength = radioObj.length;
+            if(radioLength == undefined)
+                if(radioObj.checked)
+                    return radioObj.value;
+                else
+                    return "";
+            for(var i = 0; i < radioLength; i++) {
+                if(radioObj[i].checked) {
+                    return radioObj[i].value;
+                }
+            }
+            return "";
+        }
+
+        function calculateNext() {
+            var num = Math.floor((Math.random()*MakamList.length));
+            var makamString = MakamList[num];
+            currentId = num;
+            num = Math.floor((Math.random()*maxFiles) + 1);
+            var FileName = calculateFileName(makamString, num);
+            return FileName;
+        }
+
+        function checkRightAnswer(currentMakamId, choosenAnswer)
+        {
+            return MakamList[currentMakamId] == choosenAnswer;
+        }
+
+        document.getElementById("current").onclick = function() {
+            var link = document.getElementById("current");
+            currentMakam = calculateNext();
+            link.setAttribute("href", currentMakam);
+            $('#submit').attr("disabled", false);
+            return false;
+        }
+
+       /* document.getElementById("current2").onclick = function() {
+            var link = document.getElementById("current2");
+            link.setAttribute("href", currentMakam);
+            return false;
+        }*/
+
+        function riseQuestionIndex() {
+            questionIndex++;
+            $("#questionIndex").html(questionIndex + "/" + maxQuestion);
+        }
+        document.getElementById("submit").onclick = function() {
+            $('#submit').attr("disabled", true);
+            var checked;
+            checked = getCheckedValue(document.getElementsByName("prep"));
+            if(checkRightAnswer(currentId , checked))   // good answer
+            {
+                alert("Good");
+                mark++;
+            }
+            else                                        // bad answer
+            {
+                alert("No Good\nRight Answer is: " + MakamList[currentId]);
+            }
+
+            if(questionIndex == maxQuestion) // finish!
+            {
+                alert("Your Grade is: " + mark);
+            }
+            riseQuestionIndex();
+            return false;
+        }
+
+    </script>
+
+</body>
+</html>
