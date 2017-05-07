@@ -1,255 +1,295 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
-
 <head>
     <title>Makam Quiz</title>
     <meta name="robots" content="noindex" />
+    <link rel="stylesheet" type="text/css" href="css/skeleton.css">
+    <link href="css/fonts.css" rel="stylesheet">
     <style type="text/css">
-        body {
-            background: #FFFFFF;
-            text-align: center;
+    body {
+        background-color: bisque;
+    }
+    
+    .center {
+        margin-left: auto;
+        margin-right: auto;
+        float: none !important;
+    }
+    
+    #play {
+        width: 0;
+        height: 0;
+        border-top: 30px solid transparent;
+        border-bottom: 30px solid transparent;
+        border-left: 30px solid #B48955;
+    }
+    
+    h1 {
+        text-align: center;
+        font-family: 'Eagle Lake', cursive;
+    }
+    
+    #makamList * {
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    .makamButton {
+        width: 100%;
+        background-color: #DAB58A!important;
+        border-color: #B48955!important;
+    }
+    
+    .makamButton:hover {
+        border-color: #7E96A2!important;
+        background-color: #7E96A2!important;
+    }
+    
+    @keyframes move {
+        from {
+            top: 0;
+            left: 0;
         }
-
-        p {
-            background: #FFFFFF;
-            font-family: serif;
-            text-align: right;
-            color: #0000A0;
-            font-size: 16pt;
-
+        to {
+            top: 100px;
+            left: 100px;
         }
-        a:link, a:hover, a:active { color: black; text-decoration: none; }
-        h1 {
-            background: #0000A0;
-            color: #FFFFFF;
-            font-weight: bold;
-            font-size: 18pt;
-            font-family: Arial;
-        }
-
-        h2 {
-            background: #FFFF00;
-            color: #000000;
-            font-weight: bold;
-            font-size: 30pt;
-            font-family: Arial, sans-serif;
-        }
-        a {
-            background-color:lightgrey;
-            width:200px;
-            height:50px;
-            padding:10px;
-
-            border-radius: 10px 10px 10px 10px;
-            -ms-border-radius: 10px 10px 10px 10px;
-            -moz-border-radius: 10px 10px 10px 10px;
-            -webkit-border-radius: 10px 10px 10px 10px;
-            -khtml-border-radius: 10px 10px 10px 10px;
-        }
-        body {
-            color: #D5D5D5;
-            font-size: 16pt;
-            font-family: Tahoma, Arial, sans-serif;
-        }
-
-        h3 {
-            background: #D5D5D5;
-            color: #000000;
-            font-weight: bold;
-            font-size: 20pt;
-            font-family: Arial, sans-serif;
-        }
-        h5 {
-            background: #FFFFFF;
-            color: #0080FF;
-            font-weight: bold;
-            font-size: 16pt;
-            font-family: Arial, sans-serif;
-            text-align: left;
-        }
-        .img-right { float:right; margin: 5px; }
-        .img-left { float:left; margin: 5px; }
-        .wrap {
-            width: 100%;
-        }
-
-        .floatleft, .floatright {
-            float:left;
-            width: 30%;
-            background-color: #FFFFFF;
-            height: 400px;
-        }
-
-        .floatright {
-            background-color: #FFFFFF;
-            width: 70%;
-        }
-
-            /*
-
-             -------------------------------------------------------------
-
-             In-page demo CSS - see external CSS for actual relevant stuff.
-
-             --------------------------------------------------------------
-
-             */
-
-        #soundmanager-debug {
-            /* SM2 debug container (optional, makes debug more useable) */
-            position:absolute;position:fixed;*position:absolute;bottom:10px;right:10px;width:50em;height:18em;overflow:auto;background:#fff;margin:1em;padding:1em;border:1px solid #999;font-family:"lucida console",verdana,tahoma,"sans serif";font-size:x-small;line-height:1.5em;opacity:0.9;filter:alpha(opacity=90);
-        }
-
-        body {
-            font:75% normal verdana,arial,tahoma,"sans serif";
-        }
-        .rounded-corners
-        {
-            background-color:lightgrey;
-            width:200px;
-            height:50px;
-            padding:10px;
-
-            border-radius: 10px 10px 10px 10px;
-            -ms-border-radius: 10px 10px 10px 10px;
-            -moz-border-radius: 10px 10px 10px 10px;
-            -webkit-border-radius: 10px 10px 10px 10px;
-            -khtml-border-radius: 10px 10px 10px 10px;
-        }
-
+    }
+    
+    #loading {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+    
+    #message {
+        border-radius: 57px;
+        border: 7px #2c3e50 solid;
+        padding: 30px;
+        position: absolute;
+        color: white;
+        background: lightblue;
+        font-family: cursive;
+        text-transform: uppercase;
+        font-size: larger;
+        position: absolute;
+         left: 0;
+        right: 0;
+        text-align: center;
+        top: 0;
+       
+    }
+    
+    #move {
+        animation: move 10s steps(10) infinite alternate;
+    }
     </style>
-    <link rel="stylesheet" type="text/css" href="css/mp3-player-button.css" />
-    <script type="text/javascript" src="SoundMaster/soundmanager2.js"></script>
-    <script type="text/javascript" src="SoundMaster/mp3-player-button.js"></script>
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script>
-        soundManager.setup({
-            // required: path to directory containing SM2 SWF files
-            url: 'swf/'
-        });
-    </script>
-
+    <script src="scripts/jquery.js"></script>
 </head>
+
 <body>
-<h1 title="Makam Quiz">Makam Quiz</h1>
-    <div class="wrap">
-        <div class= "floatleft">
-            <img class="img-left" src="pic/gx3651.jpg" width="289" height="600" alt="" title="" border="0" />\
+    <div class="container">
+        <h1 title="Makam Quiz">Makam Quiz</h1>
+        <p><b id="questionIndex">1/20</b></p>
+        <p id="message" class="toast">Loading...</p>
+        <div id="makamList"></div>
+        <div class="center" id="play"></div>
+        <svg id="loading" class="center toast" width="300" height="300">
+            <!-- background -->
+            <svg>
+                <svg>
+                    <circle cx="150" cy="150" r="130" style="stroke: lightblue; stroke-width:18; fill:transparent" />
+                    <circle cx="150" cy="150" r="115" style="fill:#2c3e50" />
+                    <path style="stroke: #2c3e50; stroke-dasharray:820; stroke-dashoffset:820; stroke-width:18; fill:transparent" d="M150,150 m0,-130 a 130,130 0 0,1 0,260 a 130,130 0 0,1 0,-260">
+                        <animate attributeName="stroke-dashoffset" dur="6s" to="-820" repeatCount="indefinite" />
+                    </path>
+                </svg>
+                <!-- image -->
+                <svg>
+                    <path id="hourglass" d="M150,150 C60,85 240,85 150,150 C60,215 240,215 150,150 Z" style="stroke: white; stroke-width:5; fill:white;" />
+                    <path id="frame" d="M100,97 L200, 97 M100,203 L200,203 M110,97 L110,142 M110,158 L110,200 M190,97 L190,142 M190,158 L190,200 M110,150 L110,150 M190,150 L190,150" style="stroke:lightblue; stroke-width:6; stroke-linecap:round" />
+                    <animateTransform xlink:href="#frame" attributeName="transform" type="rotate" begin="0s" dur="3s" values="0 150 150; 0 150 150; 180 150 150" keyTimes="0; 0.8; 1" repeatCount="indefinite" />
+                    <animateTransform xlink:href="#hourglass" attributeName="transform" type="rotate" begin="0s" dur="3s" values="0 150 150; 0 150 150; 180 150 150" keyTimes="0; 0.8; 1" repeatCount="indefinite" />
+                </svg>
+                <!-- sand -->
+                <svg>
+                    <!-- upper part -->
+                    <polygon id="upper" points="120,125 180,125 150,147" style="fill:#2c3e50;">
+                        <animate attributeName="points" dur="3s" keyTimes="0; 0.8; 1" values="120,125 180,125 150,147; 150,150 150,150 150,150; 150,150 150,150 150,150" repeatCount="indefinite" />
+                    </polygon>
+                    <!-- falling sand -->
+                    <path id="line" stroke-linecap="round" stroke-dasharray="1,4" stroke-dashoffset="200.00" stroke="#2c3e50" stroke-width="2" d="M150,150 L150,198">
+                        <!-- running sand -->
+                        <animate attributeName="stroke-dashoffset" dur="3s" to="1.00" repeatCount="indefinite" />
+                        <!-- emptied upper -->
+                        <animate attributeName="d" dur="3s" to="M150,195 L150,195" values="M150,150 L150,198; M150,150 L150,198; M150,198 L150,198; M150,195 L150,195" keyTimes="0; 0.65; 0.9; 1" repeatCount="indefinite" />
+                        <!-- last drop -->
+                        <animate attributeName="stroke" dur="3s" keyTimes="0; 0.65; 0.8; 1" values="#2c3e50;#2c3e50;transparent;transparent" to="transparent" repeatCount="indefinite" />
+                    </path>
+                    <!-- lower part -->
+                    <g id="lower">
+                        <path d="M150,180 L180,190 A28,10 0 1,1 120,190 L150,180 Z" style="stroke: transparent; stroke-width:5; fill:#2c3e50;">
+                            <animateTransform attributeName="transform" type="translate" keyTimes="0; 0.65; 1" values="0 15; 0 0; 0 0" dur="3s" repeatCount="indefinite" />
+                        </path>
+                        <animateTransform xlink:href="#lower" attributeName="transform" type="rotate" begin="0s" dur="3s" values="0 150 150; 0 150 150; 180 150 150" keyTimes="0; 0.8; 1" repeatCount="indefinite" />
+                    </g>
+                    <!-- lower overlay - hourglass -->
+                    <path d="M150,150 C60,85 240,85 150,150 C60,215 240,215 150,150 Z" style="stroke: white; stroke-width:5; fill:transparent;">
+                        <animateTransform attributeName="transform" type="rotate" begin="0s" dur="3s" values="0 150 150; 0 150 150; 180 150 150" keyTimes="0; 0.8; 1" repeatCount="indefinite" />
+                    </path>
+                    <!-- lower overlay - frame -->
+                    <path id="frame" d="M100,97 L200, 97 M100,203 L200,203" style="stroke:lightblue; stroke-width:6; stroke-linecap:round">
+                        <animateTransform attributeName="transform" type="rotate" begin="0s" dur="3s" values="0 150 150; 0 150 150; 180 150 150" keyTimes="0; 0.8; 1" repeatCount="indefinite" />
+                    </path>
+                </svg>
+            </svg>
+        </svg>
+        <br/>
+        <br/>
+        <div class="row control-button">
+           
+            <div class="two columns">
+                <button class="button-primary" id="replay">Play again</button>
+            </div>
         </div>
-
-        <div class="floatright">
-            <p><b id="questionIndex">1/20</b></p>
-            <h5>
-                <br>
-                <input type="radio" name="prep" value="Ajam" checked>Ajam<br>
-                <input type="radio" name="prep" value="Bayat" >Bayat<br>
-                <input type="radio" name="prep" value="Hjaz" >Hjaz<br>
-                <input type="radio" name="prep" value="Nahwand" >Nahwand<br>
-                <input type="radio" name="prep" value="Rast" >Rast<br>
-                <input type="radio" name="prep" value="Saba" >Saba<br>
-                <input type="radio" name="prep" value="Siga" >Siga
-                <br><br><br>
-            </h5>
-
-            <button id="submit" class="rounded-corners">Submit</button>
-            <button class="rounded-corners"><a id="current" href="music/Ajam/Ajam (1).mp3"class="sm2_button">Next</a></button>
-            <br>
-            <br>
-            <h2>
-            </h2>
-        </div>
-
     </div>
     <script type="text/javascript">
-        var MakamList =["Ajam","Bayat","Rast","Hjaz",
-            "Nahwand","Saba","Siga"];
+    var MakamList = ["Ajam", "Bayat", "Rast", "Hjaz",
+        "Nahwand", "Saba", "Siga"
+    ];
 
-        var maxFiles = 20;
-        var questionIndex = 1;
-        var maxQuestion = 20;
-        var mark = 0;
-        var currentMakam;
-        var currentId;
-        function calculateFileName(makamString, num) {
-            return "music/" + makamString + "/"
-                    + makamString +" (" + num + ").mp3";
+    var maxFiles = 20;
+    var questionIndex = 1;
+    var maxQuestion = 20;
+    var mark = 0;
+    var currentMakam;
+    var currentId;
+    var currentAudio = null;
+    var attempts = 0;
+    var maxAttempsPerQuestion = 3;
+    $("#play").click(function() {
+        if (currentAudio !== null && currentAudio.ended) {
+            currentAudio.play();
         }
+    })
 
-        function getCheckedValue(radioObj) {
-            if(!radioObj)
-                return "";
-            var radioLength = radioObj.length;
-            if(radioLength == undefined)
-                if(radioObj.checked)
-                    return radioObj.value;
-                else
-                    return "";
-            for(var i = 0; i < radioLength; i++) {
-                if(radioObj[i].checked) {
-                    return radioObj[i].value;
+    function calculateFileName(makamString, num) {
+        return "https://ygalbel.github.io/music/" + makamString + "/" + makamString + " (" + num + ").mp3";
+    }
+
+    function calculateNext() {
+        var num = Math.floor((Math.random() * MakamList.length));
+        var makamString = MakamList[num];
+        currentId = num;
+        num = Math.floor((Math.random() * maxFiles) + 1);
+        var FileName = calculateFileName(makamString, num);
+        return FileName;
+    }
+
+    function checkRightAnswer(currentMakamId, choosenAnswer) {
+        return MakamList[currentMakamId] == choosenAnswer;
+    }
+
+    function nextQuestion() {
+        attempts = 0;
+        currentMakam = calculateNext();
+
+        var audio = new Audio(currentMakam);
+
+        //start loading
+        $(".toast").show();
+
+        audio.addEventListener('canplay', function() {
+            $(".toast").hide();
+
+            audio.play();
+        })
+
+        audio.addEventListener('ended', function() {
+                $("#play").show();
+
+            })
+            //currentAudio = audio;
+    }
+   
+    $(document).ready(function() {
+        let rowNumber = 2;
+        var isFirst = true;
+        for (var i = 0; i < MakamList.length; i++) {
+            var name = MakamList[i];
+
+            if (i % rowNumber == 0) {
+                if (!isFirst) {
+                    $("#makamList").append(`</div>`)
                 }
+
+                $("#makamList").append(`<div class="row">`);
+                isFirst = false;
             }
-            return "";
+
+
+            $("#makamList").append(`
+                <button class="button-primary makamButton" onClick="answerButtonClicked('${name}')">
+                ${name}
+                </button>
+                `);
+
         }
 
-        function calculateNext() {
-            var num = Math.floor((Math.random()*MakamList.length));
-            var makamString = MakamList[num];
-            currentId = num;
-            num = Math.floor((Math.random()*maxFiles) + 1);
-            var FileName = calculateFileName(makamString, num);
-            return FileName;
+        if (MakamList.length % rowNumber !== 0) { // don't divide
+            $("#makamList").append(`
+                 <div class="four columns">
+                 
+                </div><br/><br/>`);
         }
 
-        function checkRightAnswer(currentMakamId, choosenAnswer)
+        nextQuestion();
+
+    })
+
+    /* document.getElementById("current2").onclick = function() {
+         var link = document.getElementById("current2");
+         link.setAttribute("href", currentMakam);
+         return false;
+     }*/
+
+    function riseQuestionIndex() {
+        questionIndex++;
+        $("#questionIndex").html(questionIndex + "/" + maxQuestion);
+    }
+
+    function answerButtonClicked(checked) {
+        console.log('answer');
+        if (checkRightAnswer(currentId, checked)) // good answer
         {
-            return MakamList[currentMakamId] == choosenAnswer;
-        }
-
-        document.getElementById("current").onclick = function() {
-            var link = document.getElementById("current");
-            currentMakam = calculateNext();
-            link.setAttribute("href", currentMakam);
-            $('#submit').attr("disabled", false);
-            return false;
-        }
-
-       /* document.getElementById("current2").onclick = function() {
-            var link = document.getElementById("current2");
-            link.setAttribute("href", currentMakam);
-            return false;
-        }*/
-
-        function riseQuestionIndex() {
-            questionIndex++;
-            $("#questionIndex").html(questionIndex + "/" + maxQuestion);
-        }
-        document.getElementById("submit").onclick = function() {
-            $('#submit').attr("disabled", true);
-            var checked;
-            checked = getCheckedValue(document.getElementsByName("prep"));
-            if(checkRightAnswer(currentId , checked))   // good answer
-            {
-                alert("Good");
-                mark++;
-            }
-            else                                        // bad answer
-            {
-                alert("No Good\nRight Answer is: " + MakamList[currentId]);
-            }
-
-            if(questionIndex == maxQuestion) // finish!
-            {
-                alert("Your Grade is: " + mark);
-            }
             riseQuestionIndex();
-            return false;
+            $("#message").html("Good");
+            mark++;
+            nextQuestion();
+
+        } else // bad answer
+        {
+            attempts++;
+            $("#message").html("No Good");
         }
 
-    </script>
+        if (attempts == maxAttempsPerQuestion) {
+            riseQuestionIndex();
+            $("#message").html("Right Answer is: " + MakamList[currentId]);
+            nextQuestion();
+        }
 
+        if (questionIndex == maxQuestion) // finish!
+        {
+            $("#message").html("Your Grade is: " + mark);
+        }
+        return false;
+    };
+    </script>
 </body>
+
 </html>
